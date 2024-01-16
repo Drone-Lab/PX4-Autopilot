@@ -11,6 +11,16 @@ The open-source project's code is directly utilized by numerous OEM drone manufa
 ### Summary
 Due to the lack of synchronization mechanism for vehicle_status variable,we identified a Race Condition  vulnerability in the navigator_main.cpp and commander.cpp.This will result in the drone not being able to PAUSE when it executes a mission.
 
+### Impact
+- Due to multiple threads accessing the 'vehicle_status' variable, one thread may experience simultaneous modifications by another thread, leading to a data race bug.
+- Drones are unable to PAUSE during missions, which can lead to collision crashes in the event of a hazardous encounter or incorrect mission settings.#22492
+
+https://user-images.githubusercontent.com/151698793/291232214-40734dab-363a-43ec-aa02-6f8bf177f3b4.mp4
+
+- After pause,the drone still keep move, but also in hold mode.So the user can not manually enter the hold to stop the aircraft, user need to switch to other modes then manually hold
+- An attacker could use the vulnerability to keep the drone from executing certain commands
+
+
 ### Details
 When the drone is executing a mission and the user clicks PAUSE, the ground control station will send **command::VEHICLE_CMD_DO_REPOSITION** to the drone.
 1. In commander.cpp, the drone state is modified to **NAVIGATION_STATE_AUTO_LOITER** based on the received commands and the state is published.
@@ -85,14 +95,6 @@ Add code before this line,assure the status is consistent with CMD before execut
 https://github.com/Drone-Lab/PX4-Autopilot/blob/24cee812795c669318d3e56e5df9261124e319a7/src/modules/navigator/navigator_main.cpp#L881
 
 
-### Impact
-- Due to multiple threads accessing the 'vehicle_status' variable, one thread may experience simultaneous modifications by another thread, leading to a data race bug.
-- Drones are unable to PAUSE during missions, which can lead to collision crashes in the event of a hazardous encounter or incorrect mission settings.#22492
-
-https://user-images.githubusercontent.com/151698793/291232214-40734dab-363a-43ec-aa02-6f8bf177f3b4.mp4
-
-- After pause,the drone still keep move, but also in hold mode.So the user can not manually enter the hold to stop the aircraft, user need to switch to other modes then manually hold
-- An attacker could use the vulnerability to keep the drone from executing certain commands
 
 
 ### Appendix
