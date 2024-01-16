@@ -1,6 +1,19 @@
+### Background
+
+PX4 (6.9k stars) https://github.com/PX4/PX4-Autopilot
+
+PX4 is a professional autopilot system developed by world-class developers from both the industry and academia. Supported by an active global community, it provides power for a variety of vehicles, including racing and cargo drones, ground vehicles, and submarines. Due to code reusability, this vulnerability should be applicable not only to multirotor drones but also to fixed-wing drones, submarines, ground vehicles, and more.
+
+The open-source project's code is directly utilized by numerous OEM drone manufacturers worldwide, including Freefly Systems, Quantum Systems, Skydio, Auterion, and others.
+
 ### Summary
 Due to the lack of synchronization mechanism for loading geofence data,we identified a Race Condition vulnerability in the geofence.cpp and mission_feasibility_checker.cpp.This will result in the drone uploading overlapping geofences and mission routes.But, as expected, MissionFeasibilityChecker should prevent the uploading.
 
+### Impact
+- Due to multiple threads accessing the geofence data, checher is dysfunctional.
+- Due to this vulnerability, users may unintentionally or intentionally execute missions within the no-fly zone after performing the following sequence of actions: triggering the vulnerability to bypass mission feasibility check, uploading waypoints within the no-fly zone, setting the home point within the no-fly zone, turn to return mode to bring the drone into the no-fly zone, and then switching to mission mode, causing the drone to execute the mission within the no-fly zone starting from the nearest waypoint.
+
+https://user-images.githubusercontent.com/151698793/295128951-3176e8fc-60ab-49e9-9dd3-4ef64523c62d.mp4
 
 ### Details
 
@@ -60,11 +73,7 @@ In the main branch now, someone noticed the potential issue with this checker's 
 >Currently, the same upload button doesn't trigger a check when updating only the fence, only updating the mission triggers a check, which I think is patently unreasonable.
 >For example, a scenario like this: a user plans a task in advance and passes the check, is ready to execute it some time later, but doesn't get a notification that the task is not compliant until just before execution.
 
-### Impact
-- Due to multiple threads accessing the geofence data, checher is dysfunctional.
-- Due to this vulnerability, users may unintentionally or intentionally execute missions within the no-fly zone after performing the following sequence of actions: triggering the vulnerability to bypass mission feasibility check, uploading waypoints within the no-fly zone, setting the home point within the no-fly zone, turn to return mode to bring the drone into the no-fly zone, and then switching to mission mode, causing the drone to execute the mission within the no-fly zone starting from the nearest waypoint.
 
-https://user-images.githubusercontent.com/151698793/295128951-3176e8fc-60ab-49e9-9dd3-4ef64523c62d.mp4
 
 ### Appendix
 We have obtained the CNVD ID of this vulnerability.
