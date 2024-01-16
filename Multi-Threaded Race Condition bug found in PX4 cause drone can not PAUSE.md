@@ -95,4 +95,7 @@ https://user-images.githubusercontent.com/151698793/291232214-40734dab-363a-43ec
 - An attacker could use the vulnerability to keep the drone from executing certain commands
 
 
+### Appendix
+We have obtained the CNVD ID of this vulnerability.
+<img src="https://github.com/Drone-Lab/PX4-Autopilot/assets/151698793/91a6f030-4700-41d7-8329-4f4192c3069d" alt="Your Image" width="700">
 
