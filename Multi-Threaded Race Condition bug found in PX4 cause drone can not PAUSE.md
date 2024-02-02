@@ -1,8 +1,9 @@
 # [REPORT]Multi-Threaded Race Condition bug found in PX4 src/modules/navigator/navigator_main.cpp which cause drone can not PAUSE
 
 ### Background
+<=v1.14 CVE-2024-24254
 
-PX4 (6.9k stars) https://github.com/PX4/PX4-Autopilot
+PX4 (6.9k stars) https://github.com/PX4/PX4-Autopilot  
 
 PX4 is a professional autopilot system developed by world-class developers from both the industry and academia. Supported by an active global community, it provides power for a variety of vehicles, including racing and cargo drones, ground vehicles, and submarines. Due to code reusability, this vulnerability should be applicable not only to multirotor drones but also to fixed-wing drones, submarines, ground vehicles, and more.
 
