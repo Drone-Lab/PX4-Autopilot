@@ -1,4 +1,5 @@
 ### Background
+CVE-2024-24255 version <=1.14
 
 PX4 (6.9k stars) https://github.com/PX4/PX4-Autopilot
 
