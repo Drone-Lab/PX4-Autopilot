@@ -188,6 +188,9 @@ protected:
 		}
 	}
 
+	// Custom interface
+	void change_home_position(int32_t x,int32_t y,int32_t z);
+
 private:
 	mavsdk::geometry::CoordinateTransformation get_coordinate_transformation();
 	mavsdk::Mission::MissionItem create_mission_item(
